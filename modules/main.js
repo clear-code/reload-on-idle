@@ -34,7 +34,7 @@ var reloader = {
   },
 
   reloadTabs: function() {
-    return Promise((function(resolve, reject) {
+    return new Promise((function(resolve, reject) {
       try {
         var filter = new RegExp(prefs.getPref(BASE + 'filter'), 'i');
         var browsers = WM.getWindows('navigator:browser');
