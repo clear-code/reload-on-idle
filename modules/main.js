@@ -22,6 +22,9 @@ var timer = Cu.import('resource://gre/modules/Timer.jsm', {});
 var { Promise } = Cu.import('resource://gre/modules/Promise.jsm', {});
 
 var reloader = {
+  MESSAGE_TYPE: 'reload-on-idle@clear-code.com',
+  lastTimeout: null,
+
   onTimeout: function() {
     this.reloadTabs()
       .then((function() {
@@ -33,15 +36,27 @@ var reloader = {
       });
   },
 
+  forEachBrowserWindow: function(aCallback) {
+    var browsers = WM.getWindows('navigator:browser');
+    browsers.forEach(aCallback, this);
+  },
+
+  forEachTab: function(aWindow, aCallback) {
+    Array.forEach(aWindow.gBrowser.tabContainer.childNodes, aCallback, this);
+  },
+
   reloadTabs: function() {
     return new Promise((function(resolve, reject) {
       try {
         var filter = new RegExp(prefs.getPref(BASE + 'filter'), 'i');
-        var browsers = WM.getWindows('navigator:browser');
-        browsers.forEach(function(aWindow) {
-          Array.forEach(aWindow.gBrowser.tabContainer.childNodes, function(aTab) {
-            if (filter.test(aTab.linkedBrowser.currentURI.spec))
-              aTab.linkedBrowser.reloadWithFlags(Ci.nsIWebNavigation.LOAD_FLAGS_NONE);
+        this.forEachBrowserWindow(function(aWindow) {
+          this.forEachTab(aWindow, function(aTab) {
+            if (!filter.test(aTab.linkedBrowser.currentURI.spec))
+              return;
+
+            aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
+              command : 'reload'
+            });
           });
         });
         resolve();
@@ -61,6 +76,29 @@ var reloader = {
     if (this.lastTimeout)
       timer.clearTimeout(this.lastTimeout);
     this.lastTimeout = null;
+  },
+
+  startup: function() {
+    this.forEachBrowserWindow(function(aWindow) {
+      this.initBrowserWindow(aWindow);
+    });
+    this.initBrowserWindow = this.initBrowserWindow.bind(this);
+    WM.addHandler(this.initBrowserWindow);
+  },
+
+  shutdown: function() {
+    this.stop();
+    WM.removeHandler(this.initBrowserWindow);
+    this.forEachBrowserWindow(function(aWindow) {
+      aWindow.messageManager.broadcastAsyncMessage(this.MESSAGE_TYPE, {
+        command : 'shutdown'
+      });
+    });
+  },
+
+  initBrowserWindow: function(aWindow) {
+    if (aWindow.document.documentElement.getAttribute('windowtype') == 'navigator:browser')
+      aWindow.messageManager.loadFrameScript('chrome://reload-on-idle/content/content-utils.js', true);
   },
 
   observe: function(aSubject, aTopic, aData) {
@@ -86,9 +124,11 @@ var idleService = Cc['@mozilla.org/widget/idleservice;1']
 var idleSeconds = Math.max(10, prefs.getPref(BASE + 'idleSeconds'));
 idleService.addIdleObserver(reloader, idleSeconds);
 
+reloader.startup();
+
 function shutdown() {
   idleService.removeIdleObserver(reloader, idleSeconds);
-  reloader.stop();
+  reloader.shutdown();
 
   timer = Promise = prefs = WM =
     idleService = reloader =
