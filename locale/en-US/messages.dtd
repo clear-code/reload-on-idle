@@ -1,0 +1,7 @@
+<!ENTITY config.title "Reload on Idle Configuration">
+<!ENTITY config.general "General">
+<!ENTITY config.idleSeconds.before "Reload tab when idleded over">
+<!ENTITY config.idleSeconds.after  "seconds">
+<!ENTITY config.filter.before "Filter for tabs to be reloaded (regular expression for URLs): /">
+<!ENTITY config.filter.after "/i">
+<!ENTITY config.debug "Output logs to the browser console">

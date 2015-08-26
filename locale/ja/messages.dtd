@@ -1,0 +1,7 @@
+<!ENTITY config.title "Reload on Idle設定">
+<!ENTITY config.general "全般">
+<!ENTITY config.idleSeconds.before "">
+<!ENTITY config.idleSeconds.after  "秒以上操作されなかったらタブを再読み込みする">
+<!ENTITY config.filter.before "再読み込みするページのフィルタ（URLにマッチする正規表現）: /">
+<!ENTITY config.filter.after "/i">
+<!ENTITY config.debug "ブラウザコンソールにログを出力する">

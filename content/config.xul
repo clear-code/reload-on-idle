@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+ - @fileOverview configuration dialog for restartless addons
+ - @author       YUKI "Piro" Hiroshi
+ - @version      2
+ -
+ - @license
+ -   The MIT License, Copyright (c) 2010 YUKI "Piro" Hiroshi.
+ -   https://github.com/piroor/restartless/blob/master/license.txt
+ - @url http://github.com/piroor/restartless
+ - -->
+<?xml-stylesheet href="chrome://global/skin/"?>
+<!DOCTYPE prefwindow SYSTEM "chrome://reload-on-idle/locale/messages.dtd">
+<prefwindow id="reload-on-idle-config"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    title="&config.title;">
+
+    <prefpane id="prefpane-general" label="&config.general;">
+        <preferences>
+            <preference id="idleSeconds"
+                name="extensions.reload-on-idle@piro.sakura.ne.jp.idleSeconds"
+                type="int"/>
+            <preference id="intervalSeconds"
+                name="extensions.reload-on-idle@piro.sakura.ne.jp.intervalSeconds"
+                type="int"/>
+            <preference id="filter"
+                name="extensions.reload-on-idle@piro.sakura.ne.jp.filter"
+                type="unichar"/>
+            <preference id="debug"
+                name="extensions.reload-on-idle@piro.sakura.ne.jp.debug"
+                type="bool"/>
+        </preferences>
+
+        <hbox align="center">
+            <label id="idleSeconds-label-before"
+                control="idleSeconds-textbox"
+                value="&config.idleSeconds.before;"/>
+            <textbox id="idleSeconds-textbox"
+                type="number"
+                size="4"
+                preference="idleSeconds"/>
+            <label id="idleSeconds-label-after"
+                control="idleSeconds-textbox"
+                value="&config.idleSeconds.after;"/>
+        </hbox>
+
+        <hbox align="center">
+            <label id="filter-label-before"
+                control="filter-textbox"
+                value="&config.filter.before;"/>
+            <textbox id="filter-textbox"
+                preference="filter" flex="1"/>
+            <label id="filter-label-after"
+                control="filter-textbox"
+                value="&config.filter.after;"/>
+        </hbox>
+
+        <checkbox label="&config.debug;" preference="debug"/>
+    </prefpane>
+</prefwindow>
