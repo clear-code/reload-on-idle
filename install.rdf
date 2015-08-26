@@ -9,7 +9,7 @@
                    em:description="Reloads specified tabs on idle to reduce memory usage."
                    em:creator="ClearCode Inc."
                    em:homepageURL="http://www.clear-code.com/"
-                   em:optionsURL="chrome://periodic-memory-usage-dumper/content/config.xul"
+                   em:optionsURL="chrome://reload-on-idle/content/config.xul"
                    em:bootstrap="true"
                    em:type="2">
 
