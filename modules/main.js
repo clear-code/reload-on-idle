@@ -4,7 +4,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-var BASE = 'extensions.reload-on-idle@piro.sakura.ne.jp.';
+var BASE = 'extensions.reload-on-idle@clear-code.com.';
 var prefs = require('lib/prefs').prefs;
 var WM = require('lib/WindowManager').WindowManager;
 

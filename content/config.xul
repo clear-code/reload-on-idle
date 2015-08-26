@@ -18,16 +18,16 @@
     <prefpane id="prefpane-general" label="&config.general;">
         <preferences>
             <preference id="idleSeconds"
-                name="extensions.reload-on-idle@piro.sakura.ne.jp.idleSeconds"
+                name="extensions.reload-on-idle@clear-code.com.idleSeconds"
                 type="int"/>
             <preference id="intervalSeconds"
-                name="extensions.reload-on-idle@piro.sakura.ne.jp.intervalSeconds"
+                name="extensions.reload-on-idle@clear-code.com.intervalSeconds"
                 type="int"/>
             <preference id="filter"
-                name="extensions.reload-on-idle@piro.sakura.ne.jp.filter"
+                name="extensions.reload-on-idle@clear-code.com.filter"
                 type="unichar"/>
             <preference id="debug"
-                name="extensions.reload-on-idle@piro.sakura.ne.jp.debug"
+                name="extensions.reload-on-idle@clear-code.com.debug"
                 type="bool"/>
         </preferences>
 
