@@ -1,0 +1,8 @@
+content reload-on-idle content/
+locale reload-on-idle en-US locale/en-US/
+locale reload-on-idle ja locale/ja/
+
+# These derectives are ignored when this is loaded as a bootstrapped addon.
+component	{4e5a4a1e-7756-4f46-8606-e6c5f2d38d46}	components/bundled.js
+contract	@clear-code.com/reload-on-idle/bundled;1	{4e5a4a1e-7756-4f46-8606-e6c5f2d38d46}
+category	profile-after-change	reload-on-idle@clear-code.com_BundledService	@clear-code.com/reload-on-idle/bundled;1
