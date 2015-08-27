@@ -16,8 +16,7 @@
     {
       case 'reload':
         content.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowUtils).disableDialogs();
-        // aTab.linkedBrowser.reloadWithFlags(Ci.nsIWebNavigation.LOAD_FLAGS_NONE);
-        content.location.reload();
+        docShell.QueryInterface(Ci.nsIWebNavigation).reload(Ci.nsIWebNavigation.LOAD_FLAGS_NONE);
         return;
 
       case 'shutdown':
