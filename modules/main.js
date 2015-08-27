@@ -46,6 +46,33 @@ var reloader = {
     Array.forEach(aWindow.gBrowser.tabContainer.childNodes, aCallback, this);
   },
 
+  get leaveButtonLabel() {
+    delete this.leaveButtonLabel;
+    try {
+      var label = Cc['@mozilla.org/intl/stringbundle;1']
+                    .getService(Ci.nsIStringBundleService)
+                    .createBundle('chrome://global/locale/dom/dom.properties')
+                    .GetStringFromName('OnBeforeUnloadLeaveButton');
+      return this.leaveButtonLabel = label;
+    }
+    catch(e) {
+      return null;
+    }
+  },
+
+  pushLeaveButton: function(aWindow, aTab) {
+    var promptBox = aWindow.gBrowser.getTabModalPromptBox(aTab.linkedBrowser);
+    var prompts = promptBox.listPrompts();
+    prompts.forEach(function(aPrompt) {
+      if (aPrompt.args.promptType != 'confirmEx')
+        return;
+      if (aPrompt.args.button0Label == this.leaveButtonLabel)
+        aPrompt.ui.button0.click();
+      else if (aPrompt.args.button1Label == this.leaveButtonLabel)
+        aPrompt.ui.button1.click();
+    }, this);
+  },
+
   reloadTabs: function() {
     return new Promise((function(resolve, reject) {
       try {
@@ -58,6 +85,7 @@ var reloader = {
             aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
               command : 'reload'
             });
+            timer.setTimeout(this.pushLeaveButton.bind(this), 0, aWindow, aTab);
           });
         });
         resolve();
