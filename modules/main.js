@@ -23,6 +23,7 @@ var { Promise } = Cu.import('resource://gre/modules/Promise.jsm', {});
 
 var reloader = {
   MESSAGE_TYPE: 'reload-on-idle@clear-code.com',
+  SCRIPT_URL: 'chrome://reload-on-idle/content/content-utils.js',
   lastTimeout: null,
 
   onTimeout: function() {
@@ -93,12 +94,13 @@ var reloader = {
       aWindow.messageManager.broadcastAsyncMessage(this.MESSAGE_TYPE, {
         command : 'shutdown'
       });
+      aWindow.messageManager.removeDelayedFrameScript(this.SCRIPT_URL);
     });
   },
 
   initBrowserWindow: function(aWindow) {
     if (aWindow.document.documentElement.getAttribute('windowtype') == 'navigator:browser')
-      aWindow.messageManager.loadFrameScript('chrome://reload-on-idle/content/content-utils.js', true);
+      aWindow.messageManager.loadFrameScript(this.SCRIPT_URL, true);
   },
 
   observe: function(aSubject, aTopic, aData) {
