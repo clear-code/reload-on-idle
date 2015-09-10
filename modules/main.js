@@ -13,9 +13,12 @@ var HOUR_IN_MINUTES = 60;
 var DAY_IN_HOURS = 24;
 var DAY_IN_SECONDS = DAY_IN_HOURS * HOUR_IN_MINUTES * MINUTE_IN_SECONDS;
 {
-  prefs.setDefaultPref(BASE + 'debug', false);
-  prefs.setDefaultPref(BASE + 'filter', '.');
-  prefs.setDefaultPref(BASE + 'idleSeconds', 10 * MINUTE_IN_SECONDS);
+  if (prefs.getDefaultPref(BASE + 'debug') === null)
+    prefs.setDefaultPref(BASE + 'debug', false);
+  if (prefs.getDefaultPref(BASE + 'filter') === null)
+    prefs.setDefaultPref(BASE + 'filter', '.');
+  if (prefs.getDefaultPref(BASE + 'idleSeconds') === null)
+    prefs.setDefaultPref(BASE + 'idleSeconds', 10 * MINUTE_IN_SECONDS);
 }
 
 var timer = Cu.import('resource://gre/modules/Timer.jsm', {});
