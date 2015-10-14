@@ -82,7 +82,8 @@ var reloader = {
         var filter = new RegExp(prefs.getPref(BASE + 'filter'), 'i');
         this.forEachBrowserWindow(function(aWindow) {
           this.forEachTab(aWindow, function(aTab) {
-            if (!filter.test(aTab.linkedBrowser.currentURI.spec))
+            if (!filter.test(aTab.linkedBrowser.currentURI.spec) ||
+                aTab.getAttribute('pending') == 'true')
               return;
 
             aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
