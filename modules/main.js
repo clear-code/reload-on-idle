@@ -28,6 +28,7 @@ var reloader = {
   MESSAGE_TYPE: 'reload-on-idle@clear-code.com',
   SCRIPT_URL: 'chrome://reload-on-idle/content/content-utils.js',
   lastTimeout: null,
+  delayedLeaveTasks: [],
 
   onTimeout: function() {
     this.reloadTabs()
@@ -89,7 +90,12 @@ var reloader = {
             aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
               command : 'reload'
             });
-            timer.setTimeout(this.pushLeaveButton.bind(this), 0, aWindow, aTab);
+            var id = timer.setTimeout((function() {
+              this.pushLeaveButton(aWindow, aTab);
+              var index = this.delayedLeaveTasks.indexOf(id);
+              this.delayedLeaveTasks.splice(index, 1);
+            }).bind(this), 0);
+            this.delayedLeaveTasks.push(id);
           });
         });
         resolve();
@@ -109,6 +115,11 @@ var reloader = {
     if (this.lastTimeout)
       timer.clearTimeout(this.lastTimeout);
     this.lastTimeout = null;
+
+    this.delayedLeaveTasks.forEach(function(aId) {
+      timer.clearTimeout(aId);
+    });
+    this.delayedLeaveTasks = [];
   },
 
   startup: function() {
