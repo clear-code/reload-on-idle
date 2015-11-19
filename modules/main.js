@@ -141,7 +141,7 @@ var reloader = {
   },
 
   unregisterIdleObserver: function() {
-    idleService.addIdleObserver(this, this.lastIdleSeconds);
+    idleService.removeIdleObserver(this, this.lastIdleSeconds);
   },
 
   initBrowserWindow: function(aWindow) {
