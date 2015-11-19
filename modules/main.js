@@ -117,9 +117,13 @@ var reloader = {
     });
     this.initBrowserWindow = this.initBrowserWindow.bind(this);
     WM.addHandler(this.initBrowserWindow);
+    this.registerIdleObserver();
+    prefs.addPrefListener(this);
   },
 
   shutdown: function() {
+    prefs.removePrefListener(this);
+    this.unregisterIdleObserver();
     this.stop();
     WM.removeHandler(this.initBrowserWindow);
     this.forEachBrowserWindow(function(aWindow) {
@@ -130,10 +134,22 @@ var reloader = {
     });
   },
 
+  registerIdleObserver: function() {
+    var idleSeconds = Math.max(10, prefs.getPref(BASE + 'idleSeconds'));
+    idleService.addIdleObserver(this, idleSeconds);
+    this.lastIdleSeconds = idleSeconds;
+  },
+
+  unregisterIdleObserver: function() {
+    idleService.addIdleObserver(this, this.lastIdleSeconds);
+  },
+
   initBrowserWindow: function(aWindow) {
     if (aWindow.document.documentElement.getAttribute('windowtype') == 'navigator:browser')
       aWindow.messageManager.loadFrameScript(this.SCRIPT_URL, true);
   },
+
+  domain: BASE,
 
   observe: function(aSubject, aTopic, aData) {
     // console.log([aSubject, aTopic, aData]);
@@ -149,19 +165,27 @@ var reloader = {
           console.log('active: stop to reload');
         this.stop();
         break;
+
+      case 'nsPref:changed':
+        {
+          switch (aData.replace(BASE, '')) {
+            case 'idleSeconds':
+              this.unregisterIdleObserver();
+              this.registerIdleObserver();
+              break;
+          }
+        }
+        break;
     }
   }
 };
 
 var idleService = Cc['@mozilla.org/widget/idleservice;1']
                     .getService(Ci.nsIIdleService);
-var idleSeconds = Math.max(10, prefs.getPref(BASE + 'idleSeconds'));
-idleService.addIdleObserver(reloader, idleSeconds);
 
 reloader.startup();
 
 function shutdown() {
-  idleService.removeIdleObserver(reloader, idleSeconds);
   reloader.shutdown();
 
   timer = Promise = prefs = WM =
