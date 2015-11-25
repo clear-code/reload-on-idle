@@ -67,16 +67,26 @@ var reloader = {
   },
 
   pushLeaveButton: function(aWindow, aTab) {
+    var buttons = this.getLeaveButtons(aWindow, aTab);
+    buttons.forEach(function(aButton) {
+      aButton.click();
+    }, this);
+  },
+
+  getLeaveButtons: function(aWindow, aTab) {
     var promptBox = aWindow.gBrowser.getTabModalPromptBox(aTab.linkedBrowser);
     var prompts = promptBox.listPrompts();
-    prompts.forEach(function(aPrompt) {
+    var buttons = prompts.map(function(aPrompt) {
       if (aPrompt.args.promptType != 'confirmEx')
-        return;
+        return null;
       if (aPrompt.args.button0Label == this.leaveButtonLabel)
-        aPrompt.ui.button0.click();
+        return aPrompt.ui.button0;
       else if (aPrompt.args.button1Label == this.leaveButtonLabel)
-        aPrompt.ui.button1.click();
+        return aPrompt.ui.button1;
     }, this);
+    return buttons.filter(function(aButton) {
+      return aButton;
+    });
   },
 
   reloadTabs: function() {
@@ -86,7 +96,8 @@ var reloader = {
         this.forEachBrowserWindow(function(aWindow) {
           this.forEachTab(aWindow, function(aTab) {
             if (!filter.test(aTab.linkedBrowser.currentURI.spec) ||
-                aTab.getAttribute('pending') == 'true')
+                aTab.getAttribute('pending') == 'true' ||
+                this.getLeaveButtons(aWindow, aTab).length > 0)
               return;
 
             aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
