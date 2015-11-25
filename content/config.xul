@@ -15,7 +15,8 @@
     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
     title="&config.title;">
 
-    <prefpane id="prefpane-general" label="&config.general;">
+    <prefpane id="prefpane-general" label="&config.general;"
+        onpaneload="validateFilter()">
         <preferences>
             <preference id="idleSeconds"
                 name="extensions.reload-on-idle@clear-code.com.idleSeconds"
@@ -47,18 +48,48 @@
                 value="&config.idleSeconds.after;"/>
         </hbox>
 
+        <groupbox orient="vertical" flex="1">
+            <caption label="&config.filter.caption;"/>
         <hbox align="center">
             <label id="filter-label-before"
                 control="filter-textbox"
                 value="&config.filter.before;"/>
             <textbox id="filter-textbox"
-                preference="filter" flex="1"/>
+                preference="filter" flex="1"
+                oninput="validateFilter()"/>
             <label id="filter-label-after"
                 control="filter-textbox"
                 value="&config.filter.after;"/>
         </hbox>
+            <hbox align="center">
+                <label value="  "/>
+                <label id="filter-error"
+                    control="filter-textbox"
+                    value="&config.filter.error;"
+                    style="
+                      color: red;
+                      text-shadow: white 0 0 3px,
+                                   white 0 0 3px,
+                                   white 0 0 3px;
+                    "
+                    collapsed="true"/>
+            </hbox>
+        </groupbox>
 
         <checkbox label="&config.ignoreConfirmation;" preference="ignoreConfirmation"/>
         <checkbox label="&config.debug;" preference="debug"/>
     </prefpane>
+    <script type="application/x-javascript"><![CDATA[
+      function validateFilter() {
+        var errorMessage = document.getElementById('filter-error');
+        var pattern = document.getElementById('filter-textbox').value;
+        try {
+          new RegExp(pattern);
+          errorMessage.collapsed = true;
+        }
+        catch(aError) {
+          errorMessage.collapsed = false;
+        }
+      }
+    ]]></script>
 </prefwindow>
