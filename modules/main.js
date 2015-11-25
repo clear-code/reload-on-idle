@@ -93,12 +93,12 @@ var reloader = {
               command : 'reload'
             });
             if (prefs.getPref(BASE + 'ignoreConfirmation')) {
-            var id = timer.setTimeout((function() {
-              this.pushLeaveButton(aWindow, aTab);
-              var index = this.delayedLeaveTasks.indexOf(id);
-              this.delayedLeaveTasks.splice(index, 1);
-            }).bind(this), 0);
-            this.delayedLeaveTasks.push(id);
+              var id = timer.setTimeout((function() {
+                this.pushLeaveButton(aWindow, aTab);
+                var index = this.delayedLeaveTasks.indexOf(id);
+                this.delayedLeaveTasks.splice(index, 1);
+              }).bind(this), 0);
+              this.delayedLeaveTasks.push(id);
             }
           });
         });
