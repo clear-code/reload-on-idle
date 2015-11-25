@@ -27,6 +27,9 @@
             <preference id="filter"
                 name="extensions.reload-on-idle@clear-code.com.filter"
                 type="unichar"/>
+            <preference id="reloadBusyTabs"
+                name="extensions.reload-on-idle@clear-code.com.reloadBusyTabs"
+                type="bool"/>
             <preference id="ignoreConfirmation"
                 name="extensions.reload-on-idle@clear-code.com.ignoreConfirmation"
                 type="bool"/>
@@ -76,6 +79,7 @@
             </hbox>
         </groupbox>
 
+        <checkbox label="&config.reloadBusyTabs;" preference="reloadBusyTabs"/>
         <checkbox label="&config.ignoreConfirmation;" preference="ignoreConfirmation"/>
         <checkbox label="&config.debug;" preference="debug"/>
     </prefpane>

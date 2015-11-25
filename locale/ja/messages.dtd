@@ -6,5 +6,6 @@
 <!ENTITY config.filter.before "/">
 <!ENTITY config.filter.after "/i">
 <!ENTITY config.filter.error "エラー：不正な正規表現です">
+<!ENTITY config.reloadBusyTabs "読み込みが完了していないタブでも強制的に再読み込みする">
 <!ENTITY config.ignoreConfirmation "フォームに入力中のデータがあっても強制的に再読み込みする">
 <!ENTITY config.debug "ブラウザコンソールにログを出力する">

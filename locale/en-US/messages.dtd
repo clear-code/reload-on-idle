@@ -6,5 +6,6 @@
 <!ENTITY config.filter.before "/">
 <!ENTITY config.filter.after "/i">
 <!ENTITY config.filter.error "Error: Invalid pattern.">
+<!ENTITY config.reloadBusyTabs "Reload forcibly even if the tab is still loading">
 <!ENTITY config.ignoreConfirmation "Reload forcibly even if there is any editing form data">
 <!ENTITY config.debug "Output logs to the browser console">

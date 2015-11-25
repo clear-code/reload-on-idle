@@ -21,6 +21,10 @@
         docShell.QueryInterface(Ci.nsIWebNavigation).reload(Ci.nsIWebNavigation.LOAD_FLAGS_NONE);
         return;
 
+      case 'stop':
+        docShell.QueryInterface(Ci.nsIWebNavigation).stop(Ci.nsIWebNavigation.STOP_ALL);
+        return;
+
       case 'shutdown':
         global.removeMessageListener('reload-on-idle@clear-code.com', messageListener);
         free();

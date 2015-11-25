@@ -19,6 +19,8 @@ var DAY_IN_SECONDS = DAY_IN_HOURS * HOUR_IN_MINUTES * MINUTE_IN_SECONDS;
     prefs.setDefaultPref(BASE + 'filter', '.');
   if (prefs.getDefaultPref(BASE + 'idleSeconds') === null)
     prefs.setDefaultPref(BASE + 'idleSeconds', 10 * MINUTE_IN_SECONDS);
+  if (prefs.getDefaultPref(BASE + 'reloadBusyTabs') === null)
+    prefs.setDefaultPref(BASE + 'reloadBusyTabs', true);
   if (prefs.getDefaultPref(BASE + 'ignoreConfirmation') === null)
     prefs.setDefaultPref(BASE + 'ignoreConfirmation', true);
 }
@@ -99,6 +101,14 @@ var reloader = {
                 aTab.getAttribute('pending') == 'true' ||
                 this.getLeaveButtons(aWindow, aTab).length > 0)
               return;
+
+            if (aTab.getAttribute('pending') == 'true') {
+              if (!prefs.getPref(BASE + 'reloadBusyTabs'))
+                return;
+              aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
+                command : 'stop'
+              });
+            }
 
             aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
               command : 'reload'
