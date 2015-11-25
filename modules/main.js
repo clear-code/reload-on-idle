@@ -34,13 +34,13 @@ var reloader = {
 
   onTimeout: function() {
     this.reloadTabs()
+      .catch(function(error) {
+        Cu.reportError(error);
+      })
       .then((function() {
         var interval = Math.max(1, prefs.getPref(BASE + 'idleSeconds'));
         this.lastTimeout = timer.setTimeout(this.onTimeout.bind(this), interval * 1000);
-      }).bind(this))
-      .catch(function(error) {
-        Cu.reportError(error);
-      });
+      }).bind(this));
   },
 
   forEachBrowserWindow: function(aCallback) {
