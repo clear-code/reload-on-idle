@@ -19,6 +19,8 @@ var DAY_IN_SECONDS = DAY_IN_HOURS * HOUR_IN_MINUTES * MINUTE_IN_SECONDS;
     prefs.setDefaultPref(BASE + 'filter', '.');
   if (prefs.getDefaultPref(BASE + 'idleSeconds') === null)
     prefs.setDefaultPref(BASE + 'idleSeconds', 10 * MINUTE_IN_SECONDS);
+  if (prefs.getDefaultPref(BASE + 'ignoreConfirmation') === null)
+    prefs.setDefaultPref(BASE + 'ignoreConfirmation', true);
 }
 
 var timer = Cu.import('resource://gre/modules/Timer.jsm', {});
@@ -90,12 +92,14 @@ var reloader = {
             aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
               command : 'reload'
             });
+            if (prefs.getPref(BASE + 'ignoreConfirmation')) {
             var id = timer.setTimeout((function() {
               this.pushLeaveButton(aWindow, aTab);
               var index = this.delayedLeaveTasks.indexOf(id);
               this.delayedLeaveTasks.splice(index, 1);
             }).bind(this), 0);
             this.delayedLeaveTasks.push(id);
+            }
           });
         });
         resolve();

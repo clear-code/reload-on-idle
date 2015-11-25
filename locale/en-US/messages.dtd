@@ -4,4 +4,5 @@
 <!ENTITY config.idleSeconds.after  "seconds">
 <!ENTITY config.filter.before "Filter for tabs to be reloaded (regular expression for URLs): /">
 <!ENTITY config.filter.after "/i">
+<!ENTITY config.ignoreConfirmation "Reload forcibly even if there is any editing form data">
 <!ENTITY config.debug "Output logs to the browser console">

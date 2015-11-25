@@ -26,6 +26,9 @@
             <preference id="filter"
                 name="extensions.reload-on-idle@clear-code.com.filter"
                 type="unichar"/>
+            <preference id="ignoreConfirmation"
+                name="extensions.reload-on-idle@clear-code.com.ignoreConfirmation"
+                type="bool"/>
             <preference id="debug"
                 name="extensions.reload-on-idle@clear-code.com.debug"
                 type="bool"/>
@@ -55,6 +58,7 @@
                 value="&config.filter.after;"/>
         </hbox>
 
+        <checkbox label="&config.ignoreConfirmation;" preference="ignoreConfirmation"/>
         <checkbox label="&config.debug;" preference="debug"/>
     </prefpane>
 </prefwindow>

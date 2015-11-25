@@ -4,4 +4,5 @@
 <!ENTITY config.idleSeconds.after  "秒以上操作されなかったらタブを再読み込みする">
 <!ENTITY config.filter.before "再読み込みするページのフィルタ（URLにマッチする正規表現）: /">
 <!ENTITY config.filter.after "/i">
+<!ENTITY config.ignoreConfirmation "フォームに入力中のデータがあっても強制的に再読み込みする">
 <!ENTITY config.debug "ブラウザコンソールにログを出力する">
