@@ -64,19 +64,16 @@
                 control="filter-textbox"
                 value="&config.filter.after;"/>
         </hbox>
-            <hbox align="center">
-                <label value="  "/>
-                <label id="filter-error"
-                    control="filter-textbox"
-                    value="&config.filter.error;"
-                    style="
-                      color: red;
-                      text-shadow: white 0 0 3px,
-                                   white 0 0 3px,
-                                   white 0 0 3px;
-                    "
-                    collapsed="true"/>
-            </hbox>
+        <deck id="filter-error-message">
+          <spacer/>
+          <label value="&config.filter.error;"
+                 style="
+                     color: red;
+                     text-shadow: white 0 0 1px,
+                                  white 0 0 1px,
+                                  white 0 0 1px;
+                 "/>
+        </deck>
         </groupbox>
 
         <checkbox label="&config.reloadBusyTabs;" preference="reloadBusyTabs"/>
@@ -85,14 +82,16 @@
     </prefpane>
     <script type="application/x-javascript"><![CDATA[
       function validateFilter() {
-        var errorMessage = document.getElementById('filter-error');
-        var pattern = document.getElementById('filter-textbox').value;
+        var deck = document.getElementById('filter-error-message');
+        var field = document.getElementById('filter-textbox');
         try {
-          new RegExp(pattern);
-          errorMessage.collapsed = true;
+          new RegExp(field.value);
+          field.style.boxShadow = '';
+          deck.selectedIndex = 0;
         }
         catch(aError) {
-          errorMessage.collapsed = false;
+          field.style.boxShadow = '0px 0px 1px red, 0px 0px 3px red';
+          deck.selectedIndex = 1;
         }
       }
     ]]></script>
