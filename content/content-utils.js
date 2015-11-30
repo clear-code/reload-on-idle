@@ -15,9 +15,11 @@
     switch (aMessage.json.command)
     {
       case 'reload':
+        if (aMessage.json.ignoreConfirmation) {
         // This affects only on Firefox 42 and later...
         // See: https://bugzilla.mozilla.org/show_bug.cgi?id=1188665
         content.QueryInterface(Ci.nsIInterfaceRequestor).getInterface(Ci.nsIDOMWindowUtils).disableDialogs();
+        }
         docShell.QueryInterface(Ci.nsIWebNavigation).reload(Ci.nsIWebNavigation.LOAD_FLAGS_NONE);
         return;
 

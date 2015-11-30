@@ -122,7 +122,8 @@ var reloader = {
             }
 
             aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
-              command : 'reload'
+              command : 'reload',
+              ignoreConfirmation: prefs.getPref(BASE + 'ignoreConfirmation')
             });
             if (prefs.getPref(BASE + 'ignoreConfirmation')) {
               var id = timer.setTimeout((function() {
