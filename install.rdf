@@ -5,7 +5,7 @@
   <RDF:Description RDF:about="urn:mozilla:install-manifest"
                    em:id="reload-on-idle@clear-code.com"
                    em:name="Reload on Idle"
-                   em:version="1.5"
+                   em:version="1.6"
                    em:description="Reloads specified tabs on idle to reduce memory usage."
                    em:creator="ClearCode Inc."
                    em:homepageURL="http://www.clear-code.com/"
