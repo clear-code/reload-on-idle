@@ -92,19 +92,30 @@ var reloader = {
   },
 
   reloadTabs: function() {
+    if (prefs.getPref(BASE + 'debug'))
+      console.log('Try reloading');
     return new Promise((function(resolve, reject) {
       try {
         var filter = new RegExp(prefs.getPref(BASE + 'filter'), 'i');
         this.forEachBrowserWindow(function(aWindow) {
           this.forEachTab(aWindow, function(aTab) {
-            if (!filter.test(aTab.linkedBrowser.currentURI.spec) ||
-                aTab.getAttribute('pending') == 'true' ||
-                this.getLeaveButtons(aWindow, aTab).length > 0)
+            var uri = aTab.linkedBrowser.currentURI.spec;
+            if (!filter.test(uri) ||
+                aTab.getAttribute('pending') == 'true')
               return;
 
+            if (this.getLeaveButtons(aWindow, aTab).length > 0) {
+              if (prefs.getPref(BASE + 'debug'))
+                console.log(aTab._tPos + ': ' + uri + ' / skipped by confirmation dialog');
+              return;
+            }
+
             if (aTab.getAttribute('pending') == 'true') {
-              if (!prefs.getPref(BASE + 'reloadBusyTabs'))
+              if (!prefs.getPref(BASE + 'reloadBusyTabs')) {
+                if (prefs.getPref(BASE + 'debug'))
+                  console.log(aTab._tPos + ': ' + uri + ' / skipped for busy');
                 return;
+              }
               aTab.linkedBrowser.messageManager.sendAsyncMessage(this.MESSAGE_TYPE, {
                 command : 'stop'
               });
@@ -120,6 +131,10 @@ var reloader = {
                 this.delayedLeaveTasks.splice(index, 1);
               }).bind(this), 0);
               this.delayedLeaveTasks.push(id);
+            }
+            else {
+              if (prefs.getPref(BASE + 'debug'))
+                console.log(aTab._tPos + ': ' + uri + ' / can be blocked by confirmation');
             }
           });
         });
