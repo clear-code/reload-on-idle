@@ -110,7 +110,7 @@ var reloader = {
               return;
             }
 
-            if (aTab.getAttribute('pending') == 'true') {
+            if (aTab.getAttribute('busy') == 'true') {
               if (!prefs.getPref(BASE + 'reloadBusyTabs')) {
                 if (prefs.getPref(BASE + 'debug'))
                   console.log(aTab._tPos + ': ' + uri + ' / skipped for busy');
