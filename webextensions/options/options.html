@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="/common/Configs.js"></script>
+    <script src="/common/common.js"></script>
+    <script src="/options/Options.js"></script>
+    <script src="/options/init.js"></script>
+    <link rel="stylesheet" type="text/css" href="options.css">
+  </head>
+
+  <body>
+    <p><label>
+      <input id="idleSeconds" type="number" min="15">
+      秒以上操作されなかったらタブを再読み込みする
+    </label></p>
+
+    <label for='filter'>
+      再読み込みするページのフィルタ（URLにマッチする正規表現）
+    </label>
+
+    <div id='regexp'>
+      <span>/</span>
+      <input id="filter" type="text">
+      <span>/ i</span>
+    </div>
+
+    <p><label>
+      <input id="reloadBusyTabs" type="checkbox">
+      読み込みが完了していないタブでも強制的に再読み込みする
+    </label>
+
+    <p><label>
+      <input id="debug" type="checkbox">
+      ブラウザコンソールにログを出力する
+    </label>
+  </body>
+</html>
