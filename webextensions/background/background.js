@@ -21,7 +21,7 @@ function reload(tabs) {
 
     var promise = browser.tabs.reload(tab.id);
     chain.push(promise);
-    log(`reload tab (id=${tab.id}, url=${tab.url})`)
+    log(`reload tab (id=${tab.id}, url=${tab.url})`);
   }
   return Promise.all(chain);
 };
@@ -36,7 +36,7 @@ function handleAlarm(alarm) {
 
   browser.idle.queryState(seconds)
     .then((state) => {
-      log(`check state (${state}, ${seconds}s)`)
+      log(`check state (${state}, ${seconds}s)`);
       if (state === 'idle' || state === 'locked') {
         var now = Date.now();
         var delta = now - LASTRELOAD;
