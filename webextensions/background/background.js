@@ -21,8 +21,10 @@ function reload(aTabs) {
   var reloadBusy = configs.reloadBusyTabs;
   var chain = [];
   for (let tab of aTabs) {
-    if (!filter.test(tab.url)) continue;
-    if (!reloadBusy && tab.status === 'loading') continue;
+    if (!filter.test(tab.url))
+      continue;
+    if (!reloadBusy && tab.status === 'loading')
+      continue;
 
     var promise = browser.tabs.reload(tab.id);
     chain.push(promise);
