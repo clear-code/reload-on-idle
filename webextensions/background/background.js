@@ -38,24 +38,19 @@ function reload(aTabs) {
  *
  * @param {alarms.Alarm} aAlarm The current alarm.
  */
-function handleAlarm(aAlarm) {
+async function handleAlarm(aAlarm) {
   var seconds = Math.max(configs.idleSeconds, 15);
+  var state = await browser.idle.queryState(seconds);
 
-  browser.idle.queryState(seconds)
-    .then((state) => {
-      log(`check state (${state}, ${seconds}s)`);
-      if (state === 'idle' || state === 'locked') {
-        var now = Date.now();
-        var delta = now - gLastReload;
-        if (delta > seconds * 1000) {
-          gLastReload = now;
-          return browser.tabs.query({});
-        }
-      }
-      return [];
-    })
-    .then(reload)
-    .catch(log);
+  log(`check state (${state}, ${seconds}s)`);
+  if (state === 'idle' || state === 'locked') {
+    var now = Date.now();
+    var delta = now - gLastReload;
+    if (delta > seconds * 1000) {
+      gLastReload = now;
+      browser.tabs.query({}).then(reload, log);
+    }
+  }
 };
 
 function main() {
