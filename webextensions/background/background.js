@@ -3,19 +3,19 @@
 /**
  * Last time we reloaded tabs.
  */
-var LASTRELOAD = Date.now();
+var gLastReload = Date.now();
 
 /**
  * Reload tabs if conditions met.
  *
- * @param {Array} tabs An array of <tabs.Tab>s.
+ * @param {Array} aTabs An array of <tabs.Tab>s.
  * @return {Promise}
  */
-function reload(tabs) {
+function reload(aTabs) {
   var filter = createFilter();
   var reloadBusy = configs.reloadBusyTabs;
   var chain = [];
-  for (let tab of tabs) {
+  for (let tab of aTabs) {
     if (!filter.test(tab.url)) continue;
     if (!reloadBusy && tab.status === 'loading') continue;
 
@@ -29,9 +29,9 @@ function reload(tabs) {
 /**
  * A callback function for periodic alarms.
  *
- * @param {alarms.Alarm} alarm The current alarm.
+ * @param {alarms.Alarm} aAlarm The current alarm.
  */
-function handleAlarm(alarm) {
+function handleAlarm(aAlarm) {
   var seconds = Math.max(configs.idleSeconds, 15);
 
   browser.idle.queryState(seconds)
@@ -39,9 +39,9 @@ function handleAlarm(alarm) {
       log(`check state (${state}, ${seconds}s)`);
       if (state === 'idle' || state === 'locked') {
         var now = Date.now();
-        var delta = now - LASTRELOAD;
+        var delta = now - gLastReload;
         if (delta > seconds * 1000) {
-          LASTRELOAD = now;
+          gLastReload = now;
           return browser.tabs.query({});
         }
       }
