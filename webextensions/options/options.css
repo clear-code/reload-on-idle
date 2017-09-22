@@ -1,0 +1,29 @@
+/*
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+input[type=number] {
+  padding: 7px 0;
+}
+
+label[for=filter] {
+  font-weight: bold;
+  font-size: 0.95em;
+  display: block;
+  padding: 0.5em 0;
+}
+
+#idleSeconds {
+  width: 65px;
+}
+
+#regexp {
+  display: block;
+  position: relative;
+  padding-bottom: 0.5em;
+}
+
+#regexp input {
+  width: 400px;
+}
