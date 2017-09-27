@@ -1,0 +1,17 @@
+{
+  "description": {
+    "message": "定期的にタブを再読み込みすることでメモリ消費を抑えます。"
+  },
+  "config.idleSeconds.before": {"message": ""},
+  "config.idleSeconds.after": {"message":  "秒以上操作されなかったらタブを再読み込みする"},
+  "config.filter.caption": {
+    "message": "再読み込みするページのフィルタ（URLにマッチする正規表現）"
+  },
+  "config.reloadBusyTabs": {
+    "message": "読み込みが完了していないタブでも強制的に再読み込みする"
+  },
+  "config.ignoreConfirmation": {
+    "message": "フォームに入力中のデータがあっても強制的に再読み込みする"
+  },
+  "config.debug": {"message": "ブラウザコンソールにログを出力する"}
+}
