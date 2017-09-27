@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <script src="/common/Configs.js"></script>
     <script src="/common/common.js"></script>
+    <script src="/common/l10n.js"></script>
     <script src="/options/Options.js"></script>
     <script src="/options/init.js"></script>
     <link rel="stylesheet" type="text/css" href="options.css">
@@ -14,12 +15,13 @@
 
   <body>
     <p><label>
+      __MSG_config.idleSeconds.before__
       <input id="idleSeconds" type="number" min="15">
-      秒以上操作されなかったらタブを再読み込みする
+      __MSG_config.idleSeconds.after__
     </label></p>
 
     <label for='filter'>
-      再読み込みするページのフィルタ（URLにマッチする正規表現）
+      __MSG_config.filter.caption__
     </label>
 
     <div id='regexp'>
@@ -30,12 +32,12 @@
 
     <p><label>
       <input id="reloadBusyTabs" type="checkbox">
-      読み込みが完了していないタブでも強制的に再読み込みする
+      __MSG_config.reloadBusyTabs__
     </label>
 
     <p><label>
       <input id="debug" type="checkbox">
-      ブラウザコンソールにログを出力する
+      __MSG_config.debug__
     </label>
   </body>
 </html>
