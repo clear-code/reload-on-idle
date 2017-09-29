@@ -2,7 +2,7 @@
   "description": {
     "message": "Reloads specified tabs on idle to reduce memory usage."
   },
-  "config.idleSeconds.before": {"message": "Reload tab when idleded over"},
+  "config.idleSeconds.before": {"message": "Reload tab when idled over"},
   "config.idleSeconds.after": {"message":  "seconds"},
   "config.filter.caption": {
     "message": "Filter for tabs to be reloaded (regular expression for URLs)"
