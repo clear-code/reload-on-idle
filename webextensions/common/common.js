@@ -26,5 +26,6 @@ configs = new Configs({
   idleSeconds: 600,
   filter: '.',
   reloadBusyTabs: false,
+  ignoreConfirmation: false,
   debug: false,
 });

@@ -9,7 +9,8 @@
     "alarms",
     "idle",
     "tabs",
-    "storage"
+    "storage",
+    "<all_urls>"
   ],
 
   "options_ui": {

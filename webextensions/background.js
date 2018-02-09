@@ -12,25 +12,30 @@ var gLastReload = Date.now();
 
 /**
  * Reload tabs if conditions met.
- *
- * @param {Array} aTabs An array of <tabs.Tab>s.
- * @return {Promise}
  */
-function reload(aTabs) {
+async function reloadTabs() {
+  var tabs = await browser.tabs.query({});
   var filter = createFilter();
-  var reloadBusy = configs.reloadBusyTabs;
-  var chain = [];
-  for (let tab of aTabs) {
+
+  for (let tab of tabs) {
     if (!filter.test(tab.url))
       continue;
-    if (!reloadBusy && tab.status === 'loading')
+    if (!configs.reloadBusyTabs && tab.status === 'loading')
       continue;
 
-    var promise = browser.tabs.reload(tab.id);
-    chain.push(promise);
+    if (configs.ignoreConfirmation) {
+      try {
+        await browser.tabs.executeScript(tab.id, {
+          allFrames: true,
+          code: 'addEventListener("beforeunload", (e) => {e.returnValue = ""})'
+        });
+      } catch (e) {
+        log(`failed to execute script on "${tab.url}" (${e})`);
+      }
+    }
     log(`reload tab (id=${tab.id}, url=${tab.url})`);
+    browser.tabs.reload(tab.id).catch(log);
   }
-  return Promise.all(chain);
 };
 
 /**
@@ -48,7 +53,7 @@ async function handleAlarm(aAlarm) {
     var delta = now - gLastReload;
     if (delta > seconds * 1000) {
       gLastReload = now;
-      browser.tabs.query({}).then(reload, log);
+      reloadTabs();
     }
   }
 };
