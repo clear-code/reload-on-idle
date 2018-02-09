@@ -2,16 +2,16 @@
   "description": {
     "message": "Reloads specified tabs on idle to reduce memory usage."
   },
-  "config.idleSeconds.before": {"message": "Reload tab when idled over"},
-  "config.idleSeconds.after": {"message":  "seconds"},
-  "config.filter.caption": {
+  "config_idleSeconds_before": {"message": "Reload tab when idled over"},
+  "config_idleSeconds_after": {"message":  "seconds"},
+  "config_filter_caption": {
     "message": "Filter for tabs to be reloaded (regular expression for URLs)"
   },
-  "config.reloadBusyTabs": {
+  "config_reloadBusyTabs": {
     "message": "Reload forcibly even if the tab is still loading"
   },
-  "config.ignoreConfirmation": {
+  "config_ignoreConfirmation": {
     "message": "Reload forcibly even if there is any editing form data"
   },
-  "config.debug": {"message": "Output logs to the browser console"}
+  "config_debug": {"message": "Output logs to the browser console"}
 }
