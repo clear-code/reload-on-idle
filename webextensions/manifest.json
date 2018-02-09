@@ -2,7 +2,8 @@
   "manifest_version": 2,
   "name": "Reload on Idle (WE)",
   "version": "1.7",
-  "description": "Reloads specified tabs on idle to reduce memory usage.",
+  "description": "__MSG_description__",
+  "default_locale": "en",
 
   "permissions": [
     "alarms",
