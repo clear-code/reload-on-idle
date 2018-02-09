@@ -1,0 +1,11 @@
+<!ENTITY config.title "Reload on Idle 配置">
+<!ENTITY config.general "常规">
+<!ENTITY config.idleSeconds.before "闲置超过">
+<!ENTITY config.idleSeconds.after  "秒则重载标签页">
+<!ENTITY config.filter.caption "需要被重载的标签页（匹配网址的正则表达式）">
+<!ENTITY config.filter.before "/">
+<!ENTITY config.filter.after "/i">
+<!ENTITY config.filter.error "错误：模式无效。">
+<!ENTITY config.reloadBusyTabs "强制重载，即便标签页仍在加载">
+<!ENTITY config.ignoreConfirmation "强制重载，即便有已编辑的表单数据">
+<!ENTITY config.debug "输出日志到浏览器控制台">
