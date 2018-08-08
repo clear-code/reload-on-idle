@@ -1,2 +1,6 @@
+common/l10n.js
+common/Configs.js
+common/Options.js
+
 # include as a lint target.
 !.eslintrc.js
