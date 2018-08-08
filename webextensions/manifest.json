@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Reload on Idle (WE)",
-  "version": "1.7",
+  "name": "Reload on Idle",
+  "version": "2.0",
   "description": "__MSG_description__",
   "default_locale": "en",
 
