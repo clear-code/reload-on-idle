@@ -1,19 +1,32 @@
-xpi: common/l10n.js common/Configs.js options/Options.js clean
-	zip -q -r -0 reload-on-idle-we.xpi *.json *.js common options _locales
+PACKAGE_NAME = reload-on-idle
+
+NPM_MOD_DIR := $(CURDIR)/node_modules
+NPM_BIN_DIR := $(NPM_MOD_DIR)/.bin
+
+.PHONY: xpi install_dependency lint format update_extlib install_extlib clean
+
+all: xpi
+
+install_dependency:
+	npm install
+
+lint:
+	$(NPM_BIN_DIR)/eslint . --ext=.js --report-unused-disable-directives
+
+format:
+	$(NPM_BIN_DIR)/eslint . --ext=.js --report-unused-disable-directives --fix
+
+xpi: update_extlib install_extlib lint clean
+	zip -q -r -0 $(PACKAGE_NAME)-we.xpi *.json *.js common options _locales >/dev/null -x '*/.*' 2>/dev/null
 
 clean:
 	rm -f *.xpi
 
-common/l10n.js: extlib
-	cp -p ../extlib/webextensions-lib-l10n/l10n.js $@
+update_extlib:
+	cd .. && git submodule update --init
 
-common/Configs.js: extlib
-	cp -p ../extlib/webextensions-lib-configs/Configs.js $@
+install_extlib:
+	cp ../extlib/webextensions-lib-configs/Configs.js common/
+	cp ../extlib/webextensions-lib-l10n/l10n.js common/
+	cp ../extlib/webextensions-lib-options/Options.js common/
 
-options/Options.js: extlib
-	cp -p ../extlib/webextensions-lib-options/Options.js $@
-
-extlib:
-	git submodule update --init
-
-.PHONY: xpi clean extlib
