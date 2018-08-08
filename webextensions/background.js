@@ -61,7 +61,7 @@ async function handleAlarm(aAlarm) {
 function main() {
   browser.alarms.onAlarm.addListener(handleAlarm);
 
-  browser.alarms.create("idle-reload-alarm", {
+  browser.alarms.create('idle-reload-alarm', {
     periodInMinutes: 0.1,
   });
 };
